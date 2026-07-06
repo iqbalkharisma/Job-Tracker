@@ -1,0 +1,3095 @@
+<!DOCTYPE html>
+<html lang="en" translate="no">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="JobTrack — Track your job applications, interviews, and offers in one place. A modern, visual job application tracker." />
+  <meta name="theme-color" content="#09090B" />
+  <title>JobTrack — Job Application Tracker</title>
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+
+  <!-- Favicon -->
+  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml" />
+
+  <script>
+    // Universal Error Logger
+    window.onerror = function(msg, url, lineNo, columnNo, error) {
+      const err = `Error: ${msg}\nURL: ${url}\nLine: ${lineNo}`;
+      console.error(err);
+      return false;
+    };
+  </script>
+
+  <!-- Stylesheets -->
+  <style>
+:root {
+  /* ========================
+     COLORS — Modern Premium Dark (High Contrast)
+     ======================== */
+  
+  /* Backgrounds */
+  --color-midnight: #09090B;       /* Pitch Black/Very Dark Zinc */
+  --color-midnight-light: #18181B; /* Dark Zinc Surface */
+  --color-slate-glass: #18181B;
+  --color-slate-glass-hover: #27272A;
+  
+  /* Text Colors (High Contrast) */
+  --color-arctic-white: #FFFFFF;   /* Pure White */
+  --color-steel-mist: #A1A1AA;     /* Zinc 400 */
+  --color-steel-mist-light: #E4E4E7;
+  
+  /* Brand/Accent Colors (Vibrant, Clear) */
+  --color-signal-blue: #3B82F6;    /* Vibrant Blue */
+  --color-signal-blue-hover: #60A5FA;
+  --color-signal-blue-glow: rgba(59, 130, 246, 0.4);
+  
+  --color-ember-gold: #F43F5E;     /* Vibrant Rose/Pink */
+  --color-ember-gold-hover: #FB7185;
+  --color-ember-gold-glow: rgba(244, 63, 94, 0.4);
+
+  /* Status Colors (Clear, highly visible Neons) */
+  --color-status-wishlist: #06B6D4;   /* Cyan */
+  --color-status-applied: #8B5CF6;    /* Violet */
+  --color-status-interview: #F59E0B;  /* Amber */
+  --color-status-offer: #10B981;      /* Emerald */
+  --color-status-rejected: #71717A;   /* Zinc 500 */
+
+  /* Status Glows */
+  --glow-wishlist: rgba(6, 182, 212, 0.25);
+  --glow-applied: rgba(139, 92, 246, 0.25);
+  --glow-interview: rgba(245, 158, 11, 0.25);
+  --glow-offer: rgba(16, 185, 129, 0.25);
+  --glow-rejected: rgba(113, 113, 122, 0.15);
+
+  /* Gradients — Slick & Vibrant */
+  --gradient-primary: linear-gradient(135deg, #3B82F6, #8B5CF6);
+  --gradient-accent: linear-gradient(135deg, #F43F5E, #F59E0B);
+  --gradient-success: linear-gradient(135deg, #10B981, #06B6D4);
+
+  /* ========================
+     TYPOGRAPHY
+     ======================== */
+  --font-display: 'Outfit', system-ui, sans-serif;
+  --font-body: 'Plus Jakarta Sans', system-ui, sans-serif;
+  --font-mono: 'JetBrains Mono', 'Fira Code', monospace;
+
+  /* Type Scale */
+  --text-xs: 0.75rem;
+  --text-sm: 0.875rem;
+  --text-base: 1rem;
+  --text-lg: 1.125rem;
+  --text-xl: 1.25rem;
+  --text-2xl: 1.5rem;
+  --text-3xl: 2rem;
+
+  /* Font Weights */
+  --weight-regular: 400;
+  --weight-medium: 500;
+  --weight-bold: 600;
+
+  /* ========================
+     SPACING
+     ======================== */
+  --space-1: 0.25rem;
+  --space-2: 0.5rem;
+  --space-3: 0.75rem;
+  --space-4: 1rem;
+  --space-5: 1.25rem;
+  --space-6: 1.5rem;
+  --space-8: 2rem;
+  --space-10: 2.5rem;
+  --space-12: 3rem;
+  --space-16: 4rem;
+
+  /* ========================
+     BORDERS & RADIUS
+     ======================== */
+  --radius-sm: 6px;
+  --radius-md: 10px;
+  --radius-lg: 14px;
+  --radius-xl: 20px;
+  --radius-full: 9999px;
+
+  /* Crisp Borders */
+  --border-subtle: 1px solid rgba(255, 255, 255, 0.08);
+  --border-glass: 1px solid rgba(255, 255, 255, 0.12);
+  --border-active: 1px solid var(--color-signal-blue);
+
+  /* ========================
+     SHADOWS (Deep, crisp)
+     ======================== */
+  --shadow-sm: 0 4px 12px rgba(0, 0, 0, 0.5);
+  --shadow-md: 0 8px 24px rgba(0, 0, 0, 0.6);
+  --shadow-lg: 0 16px 32px rgba(0, 0, 0, 0.7);
+  --shadow-xl: 0 24px 48px rgba(0, 0, 0, 0.8);
+  --shadow-glow-blue: 0 0 24px rgba(59, 130, 246, 0.35);
+  --shadow-glow-gold: 0 0 24px rgba(244, 63, 94, 0.35);
+  --shadow-card-hover: 0 12px 32px rgba(0, 0, 0, 0.8), 0 0 0 1px rgba(255, 255, 255, 0.2);
+
+  /* ========================
+     GLASS EFFECT -> Premium Frost
+     ======================== */
+  --glass-bg: rgba(24, 24, 27, 0.65); /* Zinc 900 */
+  --glass-bg-solid: #18181B;
+  --glass-border: rgba(255, 255, 255, 0.1);
+  --glass-blur: 16px;
+}
+
+:root[data-theme="light"] {
+  /* Backgrounds */
+  --color-midnight: #F8F9FA;       /* Very Light Gray */
+  --color-midnight-light: #FFFFFF; /* Pure White Surface */
+  --color-slate-glass: #FFFFFF;
+  --color-slate-glass-hover: #F1F5F9;
+  
+  /* Text Colors */
+  --color-arctic-white: #020617;   /* Slate 950 - Very Dark for high contrast */
+  --color-steel-mist: #475569;     /* Slate 600 - High contrast gray */
+  --color-steel-mist-light: #1E293B; /* Slate 800 */
+  
+  /* Borders */
+  --border-subtle: 1px solid rgba(0, 0, 0, 0.08);
+  --border-glass: 1px solid rgba(0, 0, 0, 0.12);
+  --glass-border: rgba(0, 0, 0, 0.1);
+  
+  /* Glass Effect */
+  --glass-bg: rgba(255, 255, 255, 0.85);
+  --glass-bg-solid: #FFFFFF;
+  
+  /* Shadows */
+  --shadow-sm: 0 4px 12px rgba(0, 0, 0, 0.03);
+  --shadow-md: 0 8px 24px rgba(0, 0, 0, 0.06);
+  --shadow-lg: 0 16px 32px rgba(0, 0, 0, 0.08);
+  --shadow-xl: 0 24px 48px rgba(0, 0, 0, 0.12);
+  --shadow-card-hover: 0 12px 32px rgba(0, 0, 0, 0.08), 0 0 0 1px rgba(0, 0, 0, 0.04);
+}
+
+:root {
+
+
+  /* ========================
+     TRANSITIONS (Apple-style spring)
+     ======================== */
+  --transition-fast: 150ms ease;
+  --transition-base: 250ms ease;
+  --transition-slow: 400ms ease;
+  --transition-spring: 500ms cubic-bezier(0.34, 1.56, 0.64, 1);
+  --transition-bounce: 500ms cubic-bezier(0.34, 1.56, 0.64, 1);
+
+  /* ========================
+     Z-INDEX LAYERS
+     ======================== */
+  --z-base: 1;
+  --z-dropdown: 100;
+  --z-sticky: 200;
+  --z-modal-backdrop: 900;
+  --z-modal: 1000;
+  --z-toast: 1100;
+
+  /* ========================
+     LAYOUT
+     ======================== */
+  --header-height: 72px;
+  --content-max-width: 1100px;
+  --sidebar-width: 280px;
+}
+
+/* ========================
+   RESET & BASE
+   ======================== */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  font-size: 16px;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  scroll-behavior: smooth;
+  text-size-adjust: 100%;
+}
+
+body {
+  font-family: var(--font-body);
+  font-size: var(--text-base);
+  font-weight: var(--weight-regular);
+  color: var(--color-steel-mist);
+  background-color: var(--color-midnight);
+  line-height: 1.6;
+  min-height: 100vh;
+  overflow-x: hidden;
+  transition: background-color 0.4s ease, color 0.4s ease;
+}
+
+/* ========================
+   TYPOGRAPHY
+   ======================== */
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-display);
+  color: var(--color-arctic-white);
+  line-height: 1.2;
+  letter-spacing: -0.02em;
+}
+
+h1 { font-size: var(--text-3xl); font-weight: var(--weight-bold); }
+h2 { font-size: var(--text-2xl); font-weight: var(--weight-bold); }
+h3 { font-size: var(--text-xl); font-weight: var(--weight-medium); }
+h4 { font-size: var(--text-lg); font-weight: var(--weight-medium); }
+
+p {
+  margin-bottom: var(--space-4);
+}
+
+p:last-child {
+  margin-bottom: 0;
+}
+
+a {
+  color: var(--color-signal-blue);
+  text-decoration: none;
+  transition: color var(--transition-fast);
+}
+
+a:hover {
+  color: var(--color-signal-blue-hover);
+}
+
+strong, b {
+  font-weight: var(--weight-bold);
+  color: var(--color-arctic-white);
+}
+
+small {
+  font-size: var(--text-sm);
+}
+
+code {
+  font-family: var(--font-mono);
+  font-size: 0.9em;
+}
+
+/* ========================
+   FORM ELEMENTS
+   ======================== */
+button {
+  font-family: var(--font-body);
+  cursor: pointer;
+  border: none;
+  background: none;
+  color: inherit;
+  font-size: inherit;
+  line-height: inherit;
+}
+
+input,
+select,
+textarea {
+  font-family: var(--font-body);
+  font-size: var(--text-base);
+  color: var(--color-arctic-white);
+  background-color: var(--color-midnight);
+  border: var(--border-subtle);
+  border-radius: var(--radius-md);
+  padding: var(--space-3) var(--space-4);
+  transition: border-color var(--transition-fast), box-shadow var(--transition-fast);
+  width: 100%;
+  line-height: 1.5;
+}
+
+input:focus,
+select:focus,
+textarea:focus {
+  outline: none;
+  border-color: var(--color-signal-blue);
+  box-shadow: 0 0 0 3px rgba(0, 229, 255, 0.12);
+}
+
+input::placeholder,
+textarea::placeholder {
+  color: rgba(155, 142, 196, 0.45);
+}
+
+select {
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' fill='none' stroke='%238B95A8' stroke-width='2' stroke-linecap='round' stroke-linejoin='round' viewBox='0 0 24 24'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 14px center;
+  padding-right: 40px;
+  cursor: pointer;
+}
+
+select option {
+  background-color: var(--color-slate-glass);
+  color: var(--color-arctic-white);
+}
+
+textarea {
+  resize: vertical;
+  min-height: 88px;
+}
+
+label {
+  display: block;
+  font-size: var(--text-sm);
+  font-weight: var(--weight-medium);
+  color: var(--color-steel-mist);
+  margin-bottom: var(--space-2);
+}
+
+/* ========================
+   MEDIA & LISTS
+   ======================== */
+img {
+  max-width: 100%;
+  display: block;
+}
+
+ul, ol {
+  list-style: none;
+}
+
+/* ========================
+   SCROLLBAR
+   ======================== */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(155, 142, 196, 0.25);
+  border-radius: var(--radius-full);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(155, 142, 196, 0.4);
+}
+
+/* Firefox */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(155, 142, 196, 0.25) transparent;
+}
+
+/* ========================
+   FOCUS VISIBLE
+   ======================== */
+:focus-visible {
+  outline: 2px solid var(--color-signal-blue);
+  outline-offset: 2px;
+}
+
+button:focus-visible,
+a:focus-visible {
+  border-radius: var(--radius-sm);
+}
+
+/* ========================
+   SELECTION
+   ======================== */
+::selection {
+  background: rgba(0, 229, 255, 0.3);
+  color: var(--color-arctic-white);
+}
+
+/* ========================
+   REDUCED MOTION
+   ======================== */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* ========================
+   UTILITY CLASSES
+   ======================== */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.mono {
+  font-family: var(--font-mono);
+}
+
+.text-muted {
+  color: var(--color-steel-mist);
+}
+
+.text-white {
+  color: var(--color-arctic-white);
+}
+
+/* ========================
+   MAIN LAYOUT
+   ======================== */
+.app {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.main-content {
+  flex: 1;
+  width: 100%;
+  max-width: var(--content-max-width);
+  margin: 0 auto;
+  padding: var(--space-8) var(--space-6);
+  padding-top: calc(var(--header-height) + var(--space-8));
+}
+
+/* ========================
+   HEADER
+   ======================== */
+.header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: var(--header-height);
+  background: var(--glass-bg);
+  backdrop-filter: blur(var(--glass-blur));
+  -webkit-backdrop-filter: blur(var(--glass-blur));
+  border-bottom: var(--border-subtle);
+  z-index: var(--z-sticky);
+  display: flex;
+  align-items: center;
+  padding: 0 var(--space-6);
+  transition: background-color var(--transition-base), border-color var(--transition-base);
+}
+
+.header__inner {
+  width: 100%;
+  max-width: var(--content-max-width);
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.header__logo {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  font-family: var(--font-display);
+  font-size: var(--text-lg);
+  font-weight: var(--weight-bold);
+  color: var(--color-arctic-white);
+  letter-spacing: -0.03em;
+  user-select: none;
+}
+
+.header__logo-img {
+  height: 34px;
+  width: 34px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.header__nav {
+  display: flex;
+  align-items: center;
+  gap: var(--space-1);
+}
+
+.header__nav-btn {
+  padding: var(--space-2) var(--space-4);
+  border-radius: var(--radius-md);
+  font-size: var(--text-sm);
+  font-weight: var(--weight-medium);
+  color: var(--color-steel-mist);
+  transition: color var(--transition-fast), background-color var(--transition-fast);
+  position: relative;
+}
+
+.header__nav-btn:hover {
+  color: var(--color-arctic-white);
+  background-color: rgba(255, 255, 255, 0.05);
+}
+
+.header__nav-btn.is-active {
+  color: var(--color-arctic-white);
+  background-color: rgba(0, 229, 255, 0.12);
+}
+
+.header__nav-btn.is-active::after {
+  content: '';
+  position: absolute;
+  bottom: -1px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 20px;
+  height: 2px;
+  background: var(--color-signal-blue);
+  border-radius: var(--radius-full);
+}
+
+/* ========================
+   HERO STATS
+   ======================== */
+.hero-stats {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: var(--space-4);
+  margin-bottom: var(--space-8);
+}
+
+.stat-card {
+  background: var(--glass-bg);
+  backdrop-filter: blur(var(--glass-blur));
+  -webkit-backdrop-filter: blur(var(--glass-blur));
+  border: var(--border-glass);
+  border-radius: var(--radius-lg);
+  padding: var(--space-6) var(--space-5);
+  transition: all var(--transition-base);
+  position: relative;
+  overflow: hidden;
+}
+
+.stat-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, var(--stat-accent, var(--color-steel-mist)), transparent);
+  opacity: 0.5;
+}
+
+.stat-card:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
+}
+
+.stat-card__number {
+  font-family: var(--font-mono);
+  font-size: var(--text-3xl);
+  font-weight: var(--weight-bold);
+  color: var(--color-arctic-white);
+  line-height: 1;
+  margin-bottom: var(--space-2);
+}
+
+.stat-card__label {
+  font-size: var(--text-sm);
+  color: var(--color-steel-mist);
+  font-weight: var(--weight-medium);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.stat-card--total { --stat-accent: var(--color-arctic-white); }
+.stat-card--total .stat-card__number { color: var(--color-arctic-white); }
+
+:root[data-theme="light"] .stat-card--total .stat-card__number,
+:root[data-theme="light"] .stat-card--total .stat-card__label {
+  color: #000000;
+  font-weight: 800; /* Make it extra bold to stand out in light mode */
+}
+
+.stat-card--blue { --stat-accent: var(--color-signal-blue); }
+.stat-card--blue .stat-card__number { color: var(--color-signal-blue); }
+
+.stat-card--gold { --stat-accent: var(--color-ember-gold); }
+.stat-card--gold .stat-card__number { color: var(--color-ember-gold); }
+
+.stat-card--indigo { --stat-accent: var(--color-status-applied); }
+.stat-card--indigo .stat-card__number { color: var(--color-status-applied); }
+
+/* ========================
+   TOOLBAR (Filters + Actions)
+   ======================== */
+.toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-4);
+  margin-bottom: var(--space-6);
+  flex-wrap: wrap;
+}
+
+.toolbar__left {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  flex-wrap: wrap;
+}
+
+.toolbar__right {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+}
+
+/* Search Input */
+.search-box {
+  position: relative;
+}
+
+.search-box__icon {
+  position: absolute;
+  left: var(--space-3);
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--color-steel-mist);
+  pointer-events: none;
+  width: 16px;
+  height: 16px;
+}
+
+.search-box__input {
+  padding-left: 36px;
+  width: 220px;
+  height: 38px;
+  font-size: var(--text-sm);
+  background: var(--glass-bg);
+  border: var(--border-glass);
+  border-radius: var(--radius-full);
+  transition: width var(--transition-base), border-color var(--transition-fast);
+}
+
+.search-box__input:focus {
+  width: 280px;
+  border-color: var(--color-signal-blue);
+  box-shadow: 0 0 0 3px rgba(0, 229, 255, 0.1);
+}
+
+/* Filter Tabs */
+.filter-tabs {
+  display: flex;
+  align-items: center;
+  gap: var(--space-1);
+  background: var(--glass-bg);
+  border: var(--border-glass);
+  border-radius: var(--radius-full);
+  padding: 3px;
+}
+
+.filter-tab {
+  padding: var(--space-2) var(--space-4);
+  border-radius: var(--radius-full);
+  font-size: var(--text-sm);
+  font-weight: var(--weight-medium);
+  color: var(--color-steel-mist);
+  transition: all var(--transition-fast);
+  white-space: nowrap;
+  position: relative;
+}
+
+.filter-tab:hover {
+  color: var(--color-arctic-white);
+}
+
+.filter-tab.is-active {
+  background: rgba(0, 229, 255, 0.15);
+  color: var(--color-arctic-white);
+}
+
+.filter-tab__count {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 18px;
+  height: 18px;
+  padding: 0 5px;
+  border-radius: var(--radius-full);
+  background: rgba(255, 255, 255, 0.08);
+  font-size: var(--text-xs);
+  font-family: var(--font-mono);
+  margin-left: var(--space-2);
+}
+
+.filter-tab.is-active .filter-tab__count {
+  background: rgba(0, 229, 255, 0.25);
+}
+
+/* ========================
+   VIEW SECTIONS
+   ======================== */
+.view {
+  display: none;
+}
+
+.view.is-active {
+  display: block;
+}
+
+/* ========================
+   RESPONSIVE
+   ======================== */
+@media (max-width: 1024px) {
+  .hero-stats {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 768px) {
+  .main-content {
+    padding: var(--space-4) var(--space-4);
+    padding-top: calc(var(--header-height) + var(--space-4));
+  }
+
+  .header {
+    padding: 0 var(--space-4);
+  }
+
+  .header__inner {
+    gap: var(--space-2);
+  }
+
+  .header__nav-btn span {
+    display: none;
+  }
+
+  .hero-stats {
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--space-3);
+  }
+
+  .toolbar {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .toolbar__left {
+    overflow-x: auto;
+    padding-bottom: var(--space-2);
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+
+  .toolbar__left::-webkit-scrollbar {
+    display: none;
+  }
+
+  .toolbar__right {
+    justify-content: stretch;
+  }
+
+  .search-box__input {
+    width: 100%;
+  }
+
+  .search-box__input:focus {
+    width: 100%;
+  }
+
+  .search-box {
+    flex: 1;
+  }
+}
+
+@media (max-width: 480px) {
+  .header__logo {
+    font-size: 0; /* Hides "JobTrack" text */
+    gap: 0;
+  }
+  
+  .header__logo-img {
+    font-size: var(--text-sm);
+  }
+
+  .hero-stats {
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-2);
+  }
+
+  .stat-card {
+    padding: var(--space-3);
+  }
+
+  .stat-card__number {
+    font-size: var(--text-xl);
+  }
+
+  .filter-tabs {
+    overflow-x: auto;
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+
+  .filter-tabs::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+/* ========================
+   BUTTONS
+   ======================== */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+  padding: var(--space-2) var(--space-5);
+  border-radius: var(--radius-md);
+  font-size: var(--text-sm);
+  font-weight: var(--weight-medium);
+  line-height: 1.5;
+  transition: all var(--transition-fast);
+  white-space: nowrap;
+  height: 38px;
+  cursor: pointer;
+}
+
+.btn--primary {
+  background: var(--color-signal-blue);
+  color: white;
+  box-shadow: 0 2px 8px rgba(59, 130, 246, 0.4);
+}
+
+.btn--primary:hover {
+  background: var(--color-signal-blue-hover);
+  box-shadow: var(--shadow-glow-blue);
+  transform: translateY(-2px);
+}
+
+.btn--ghost {
+  color: var(--color-steel-mist);
+  background: transparent;
+  border: var(--border-subtle);
+}
+
+.btn--ghost:hover {
+  color: var(--color-arctic-white);
+  background: rgba(255, 255, 255, 0.05);
+  border-color: rgba(255, 255, 255, 0.12);
+}
+
+.btn--danger {
+  color: #FB7185;
+  background: transparent;
+}
+
+.btn--danger:hover {
+  background: rgba(251, 113, 133, 0.1);
+}
+
+.btn--icon {
+  width: 38px;
+  height: 38px;
+  padding: 0;
+  border-radius: var(--radius-md);
+  color: var(--color-steel-mist);
+}
+
+.btn--icon:hover {
+  color: var(--color-arctic-white);
+  background: rgba(255, 255, 255, 0.06);
+}
+
+.btn svg {
+  width: 16px;
+  height: 16px;
+  flex-shrink: 0;
+}
+
+/* ========================
+   JOB CARDS
+   ======================== */
+.job-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+.job-card {
+  background: var(--glass-bg);
+  backdrop-filter: blur(var(--glass-blur));
+  -webkit-backdrop-filter: blur(var(--glass-blur));
+  border: var(--border-glass);
+  border-radius: var(--radius-lg);
+  padding: var(--space-5) var(--space-6);
+  cursor: pointer;
+  transition: all var(--transition-base);
+  position: relative;
+  overflow: hidden;
+}
+
+.job-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 3px;
+  height: 100%;
+  background: var(--card-accent, var(--color-steel-mist));
+  opacity: 0.6;
+  transition: opacity var(--transition-fast);
+}
+
+.job-card:hover {
+  border-color: rgba(255, 255, 255, 0.1);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
+}
+
+.job-card:hover::before {
+  opacity: 1;
+}
+
+.job-card--wishlist { --card-accent: var(--color-status-wishlist); }
+.job-card--applied { --card-accent: var(--color-status-applied); }
+.job-card--interview { --card-accent: var(--color-status-interview); }
+.job-card--offer { --card-accent: var(--color-status-offer); }
+.job-card--rejected { --card-accent: var(--color-status-rejected); }
+
+.job-card__header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--space-4);
+  margin-bottom: var(--space-3);
+}
+
+.job-card__header-left {
+  flex: 1;
+  min-width: 0;
+}
+
+.job-card__header-right {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  flex-shrink: 0;
+}
+
+.job-card__status {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  font-size: var(--text-xs);
+  font-weight: var(--weight-medium);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  margin-bottom: var(--space-2);
+}
+
+.job-card__status-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: var(--radius-full);
+  background: var(--card-accent);
+  box-shadow: 0 0 6px var(--card-accent);
+}
+
+.job-card__title {
+  font-family: var(--font-display);
+  font-size: var(--text-lg);
+  font-weight: var(--weight-bold);
+  color: var(--color-arctic-white);
+  line-height: 1.3;
+  margin-bottom: var(--space-1);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.job-card__company {
+  font-size: var(--text-sm);
+  color: var(--color-steel-mist);
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  flex-wrap: wrap;
+}
+
+.job-card__company span {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.job-card__company .separator {
+  color: rgba(155, 142, 196, 0.3);
+}
+
+.job-card__dates {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  color: rgba(155, 142, 196, 0.6);
+  margin-top: var(--space-3);
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+}
+
+/* Favorite button */
+.job-card__fav {
+  color: var(--color-steel-mist);
+  opacity: 0;
+  transition: all var(--transition-fast);
+}
+
+.job-card:hover .job-card__fav,
+.job-card__fav.is-active {
+  opacity: 1;
+}
+
+.job-card__fav.is-active {
+  color: var(--color-ember-gold);
+}
+
+/* Card Actions */
+.job-card__actions {
+  display: flex;
+  gap: var(--space-1);
+  opacity: 0;
+  transition: opacity var(--transition-fast);
+}
+
+.job-card:hover .job-card__actions {
+  opacity: 1;
+}
+
+/* ========================
+   JOURNEY PROGRESS RAIL
+   ======================== */
+.journey-rail {
+  display: flex;
+  align-items: center;
+  gap: 0;
+  margin-top: var(--space-4);
+  padding-top: var(--space-4);
+  border-top: 1px solid rgba(255, 255, 255, 0.04);
+}
+
+.journey-rail__segment {
+  display: flex;
+  align-items: center;
+  flex: 1;
+}
+
+.journey-rail__segment:last-child {
+  flex: 0;
+}
+
+.journey-rail__node {
+  width: 10px;
+  height: 10px;
+  border-radius: 2px;
+  transform: rotate(45deg);
+  flex-shrink: 0;
+  transition: all var(--transition-base);
+  position: relative;
+}
+
+.journey-rail__node--completed {
+  background: var(--card-accent, var(--color-signal-blue));
+  box-shadow: 0 0 8px var(--card-accent, rgba(255, 255, 255, 0.2));
+}
+
+.journey-rail__node--current {
+  background: var(--card-accent, var(--color-signal-blue));
+  --pulse-color: var(--card-accent, rgba(59, 130, 246, 0.4));
+}
+
+.journey-rail__node--upcoming {
+  background: transparent;
+  border: 1.5px solid rgba(155, 142, 196, 0.3);
+}
+
+.journey-rail__line {
+  flex: 1;
+  height: 2px;
+  margin: 0 2px;
+  border-radius: var(--radius-full);
+}
+
+.journey-rail__line--completed {
+  background: var(--card-accent, var(--color-signal-blue));
+  opacity: 0.5;
+}
+
+.journey-rail__line--upcoming {
+  background: rgba(155, 142, 196, 0.15);
+}
+
+.journey-rail__labels {
+  display: flex;
+  justify-content: space-between;
+  margin-top: var(--space-2);
+}
+
+.journey-rail__label {
+  font-size: 0.625rem;
+  color: rgba(155, 142, 196, 0.5);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.journey-rail__label--active {
+  color: var(--color-arctic-white);
+}
+
+/* ========================
+   KANBAN BOARD
+   ======================== */
+.kanban-board {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: var(--space-4);
+  min-height: 500px;
+}
+
+.kanban-column {
+  background: rgba(255, 255, 255, 0.03);
+  border: var(--border-subtle);
+  border-radius: var(--radius-lg);
+  padding: var(--space-4);
+  display: flex;
+  flex-direction: column;
+  min-height: 400px;
+}
+
+.kanban-column__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: var(--space-4);
+  padding-bottom: var(--space-3);
+  border-bottom: 2px solid var(--column-accent, var(--color-steel-mist));
+}
+
+.kanban-column--wishlist { --column-accent: var(--color-status-wishlist); }
+.kanban-column--applied { --column-accent: var(--color-status-applied); }
+.kanban-column--interview { --column-accent: var(--color-status-interview); }
+.kanban-column--offer { --column-accent: var(--color-status-offer); }
+.kanban-column--rejected { --column-accent: var(--color-status-rejected); }
+
+.kanban-column__title {
+  font-family: var(--font-display);
+  font-size: var(--text-sm);
+  font-weight: var(--weight-bold);
+  color: var(--color-arctic-white);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.kanban-column__count {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  color: var(--column-accent);
+  background: rgba(255, 255, 255, 0.05);
+  padding: 2px 8px;
+  border-radius: var(--radius-full);
+}
+
+.kanban-column__cards {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  overflow-y: auto;
+  padding-right: var(--space-1);
+}
+
+/* Kanban mini card */
+.kanban-card {
+  background: var(--glass-bg-solid);
+  border: var(--border-glass);
+  border-radius: var(--radius-md);
+  padding: var(--space-3) var(--space-4);
+  cursor: grab;
+  transition: all var(--transition-base);
+  user-select: none;
+}
+
+.kanban-card:hover {
+  border-color: rgba(255, 255, 255, 0.1);
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-sm);
+}
+
+.kanban-card:active {
+  cursor: grabbing;
+}
+
+.kanban-card__company {
+  font-size: var(--text-sm);
+  font-weight: var(--weight-bold);
+  color: var(--color-arctic-white);
+  margin-bottom: var(--space-1);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.kanban-card__position {
+  font-size: var(--text-xs);
+  color: var(--color-steel-mist);
+  margin-bottom: var(--space-2);
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.kanban-card__date {
+  font-family: var(--font-mono);
+  font-size: 0.625rem;
+  color: rgba(155, 142, 196, 0.5);
+}
+
+/* Drop zone */
+.kanban-column.is-drag-over {
+  background: rgba(59, 130, 246, 0.15);
+  border-color: rgba(59, 130, 246, 0.5);
+  border-style: dashed;
+  box-shadow: inset 0 0 20px rgba(59, 130, 246, 0.15);
+}
+
+.kanban-card.is-dragging {
+  opacity: 0; /* Handled by animation class but just in case */
+}
+
+.kanban-drop-placeholder {
+  border: 2px dashed rgba(255, 255, 255, 0.2);
+  border-radius: var(--radius-md);
+  min-height: 60px;
+  background: rgba(59, 130, 246, 0.05);
+}
+
+/* ========================
+   MODAL
+   ======================== */
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.65);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  z-index: var(--z-modal-backdrop);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-4);
+}
+
+.modal-overlay.is-hidden {
+  display: none;
+}
+
+.modal {
+  background: var(--color-slate-glass);
+  border: var(--border-glass);
+  border-radius: var(--radius-xl);
+  width: 100%;
+  max-width: 560px;
+  max-height: 90vh;
+  overflow-y: auto;
+  box-shadow: var(--shadow-xl);
+  z-index: var(--z-modal);
+}
+
+.modal__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--space-6) var(--space-6) var(--space-4);
+}
+
+.modal__title {
+  font-family: var(--font-display);
+  font-size: var(--text-xl);
+  font-weight: var(--weight-bold);
+  color: var(--color-arctic-white);
+}
+
+.modal__close {
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--radius-sm);
+  color: var(--color-steel-mist);
+  transition: all var(--transition-fast);
+}
+
+.modal__close:hover {
+  color: var(--color-arctic-white);
+  background: rgba(255, 255, 255, 0.06);
+}
+
+.modal__body {
+  padding: 0 var(--space-6) var(--space-4);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-5);
+}
+
+.modal__footer {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: var(--space-3);
+  padding: var(--space-4) var(--space-6) var(--space-6);
+  border-top: var(--border-subtle);
+}
+
+/* Form field groups */
+.form-group {
+  display: flex;
+  flex-direction: column;
+}
+
+.form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-4);
+}
+
+.form-group label {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.form-group label svg {
+  width: 14px;
+  height: 14px;
+  opacity: 0.5;
+}
+
+/* ========================
+   TOAST NOTIFICATIONS
+   ======================== */
+.toast-container {
+  position: fixed;
+  top: calc(var(--header-height) + var(--space-4));
+  right: var(--space-4);
+  z-index: var(--z-toast);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  pointer-events: none;
+}
+
+.toast {
+  background: var(--color-slate-glass);
+  border: var(--border-glass);
+  border-radius: var(--radius-md);
+  padding: var(--space-3) var(--space-5);
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  box-shadow: var(--shadow-lg);
+  pointer-events: auto;
+  min-width: 260px;
+  max-width: 400px;
+}
+
+.toast__icon {
+  width: 18px;
+  height: 18px;
+  flex-shrink: 0;
+}
+
+.toast--success .toast__icon { color: #2DD4BF; }
+.toast--error .toast__icon { color: #FB7185; }
+.toast--info .toast__icon { color: var(--color-signal-blue); }
+
+.toast__message {
+  font-size: var(--text-sm);
+  color: var(--color-arctic-white);
+  flex: 1;
+}
+
+.toast__close {
+  width: 20px;
+  height: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--color-steel-mist);
+  border-radius: var(--radius-sm);
+  flex-shrink: 0;
+  transition: color var(--transition-fast);
+}
+
+.toast__close:hover {
+  color: var(--color-arctic-white);
+}
+
+/* ========================
+   EMPTY STATE
+   ======================== */
+.empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-16) var(--space-8);
+  text-align: center;
+}
+
+.empty-state__icon {
+  width: 80px;
+  height: 80px;
+  margin-bottom: var(--space-6);
+  color: var(--color-steel-mist-light);
+}
+
+.empty-state__title {
+  font-family: var(--font-display);
+  font-size: var(--text-xl);
+  font-weight: var(--weight-bold);
+  color: var(--color-arctic-white);
+  margin-bottom: var(--space-2);
+}
+
+.empty-state__desc {
+  font-size: var(--text-sm);
+  color: var(--color-steel-mist);
+  max-width: 360px;
+  margin-bottom: var(--space-6);
+  line-height: 1.6;
+}
+
+/* ========================
+   CONFIRM DIALOG
+   ======================== */
+.confirm-dialog {
+  text-align: center;
+  padding: var(--space-6);
+}
+
+.confirm-dialog__title {
+  font-family: var(--font-display);
+  font-size: var(--text-lg);
+  font-weight: var(--weight-bold);
+  color: var(--color-arctic-white);
+  margin-bottom: var(--space-2);
+}
+
+.confirm-dialog__message {
+  font-size: var(--text-sm);
+  color: var(--color-steel-mist);
+  margin-bottom: var(--space-6);
+}
+
+.confirm-dialog__actions {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-3);
+}
+
+/* ========================
+   RESPONSIVE — Components
+   ======================== */
+@media (max-width: 1024px) {
+  .kanban-board {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media (max-width: 768px) {
+  .kanban-board {
+    display: flex;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    gap: var(--space-4);
+    padding-bottom: var(--space-4);
+    -webkit-overflow-scrolling: touch;
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+  
+  .kanban-board::-webkit-scrollbar {
+    display: none;
+  }
+
+  .kanban-column {
+    min-width: 85vw;
+    scroll-snap-align: center;
+    flex-shrink: 0;
+  }
+
+  .job-card {
+    padding: var(--space-4);
+  }
+
+  .job-card__actions {
+    opacity: 1;
+  }
+
+  .job-card__fav {
+    opacity: 1;
+  }
+
+  .form-row {
+    grid-template-columns: 1fr;
+  }
+
+  .modal-overlay {
+    align-items: flex-end; /* Bottom sheet style */
+    padding: 0;
+  }
+
+  .modal {
+    max-width: 100%;
+    margin: 0;
+    border-radius: var(--radius-xl) var(--radius-xl) 0 0;
+    max-height: 92vh;
+  }
+}
+
+@media (max-width: 480px) {
+  .kanban-column {
+    min-width: 90vw;
+  }
+
+  .toast {
+    min-width: auto;
+    max-width: calc(100vw - var(--space-8));
+  }
+  
+  .modal {
+    height: 100vh;
+    max-height: 100vh;
+    border-radius: 0;
+  }
+}
+
+/* ========================
+   KEYFRAMES — Premium Dynamic (High Interest)
+   ======================== */
+
+/* Bouncy Elastic Fade Up */
+@keyframes springReveal {
+  0% {
+    opacity: 0;
+    transform: translateY(30px) scale(0.95);
+  }
+  60% {
+    opacity: 1;
+    transform: translateY(-5px) scale(1.02);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+/* Modals */
+@keyframes springIn {
+  0% {
+    opacity: 0;
+    transform: scale(0.9) translateY(20px);
+  }
+  60% {
+    opacity: 1;
+    transform: scale(1.03) translateY(-5px);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+@keyframes springOut {
+  0% { opacity: 1; transform: scale(1); }
+  100% { opacity: 0; transform: scale(0.95) translateY(10px); }
+}
+
+/* Highly visible glowing pulse for Rail */
+@keyframes neonPulse {
+  0%, 100% {
+    box-shadow: 0 0 10px 2px var(--pulse-color, rgba(59, 130, 246, 0.4));
+    transform: rotate(45deg) scale(1);
+  }
+  50% {
+    box-shadow: 0 0 25px 8px var(--pulse-color, rgba(59, 130, 246, 0.8));
+    transform: rotate(45deg) scale(1.2);
+  }
+}
+
+/* Smooth elegant float */
+@keyframes dynamicFloat {
+  0%, 100% { transform: translateY(0) rotate(0deg); }
+  50% { transform: translateY(-6px) rotate(1deg); }
+}
+
+/* Dynamic toast */
+@keyframes toastDynamicIn {
+  0% { opacity: 0; transform: translateX(50px) scale(0.9); }
+  60% { opacity: 1; transform: translateX(-10px) scale(1.05); }
+  100% { opacity: 1; transform: translateX(0) scale(1); }
+}
+
+@keyframes toastDynamicOut {
+  from { opacity: 1; transform: translateX(0); }
+  to { opacity: 0; transform: translateX(50px); }
+}
+
+/* Backdrop */
+@keyframes backdropIn {
+  from { opacity: 0; backdrop-filter: blur(0px); }
+  to { opacity: 1; backdrop-filter: blur(8px); }
+}
+@keyframes backdropOut {
+  from { opacity: 1; }
+  to { opacity: 0; }
+}
+
+/* Beautiful Shimmer Sweep */
+@keyframes premiumShimmer {
+  0% {
+    background-position: 200% center;
+  }
+  100% {
+    background-position: -200% center;
+  }
+}
+
+/* ========================
+   ANIMATION CLASSES
+   ======================== */
+
+.animate-slide-up {
+  animation: springReveal 600ms cubic-bezier(0.34, 1.56, 0.64, 1) both;
+}
+
+/* Fast Stagger */
+.stagger-1 { animation-delay: 50ms; }
+.stagger-2 { animation-delay: 100ms; }
+.stagger-3 { animation-delay: 150ms; }
+.stagger-4 { animation-delay: 200ms; }
+.stagger-5 { animation-delay: 250ms; }
+.stagger-6 { animation-delay: 300ms; }
+
+.modal-enter {
+  animation: springIn 500ms cubic-bezier(0.34, 1.56, 0.64, 1) both;
+}
+
+.modal-exit {
+  animation: springOut 200ms ease-out both;
+}
+
+.backdrop-enter {
+  animation: backdropIn 300ms ease both;
+}
+.backdrop-exit {
+  animation: backdropOut 200ms ease both;
+}
+
+.rail-pulse {
+  animation: neonPulse 2s ease-in-out infinite;
+}
+
+.toast-enter {
+  animation: toastDynamicIn 500ms cubic-bezier(0.34, 1.56, 0.64, 1) both;
+}
+.toast-exit {
+  animation: toastDynamicOut 250ms ease both;
+}
+
+.is-dragging {
+  animation: dynamicFloat 1s ease-in-out infinite;
+  opacity: 0.95;
+  box-shadow: 0 24px 48px rgba(0,0,0,0.8), 0 0 0 2px var(--color-signal-blue);
+  z-index: 100;
+  cursor: grabbing !important;
+  transform: scale(1.05);
+}
+
+/* ========================
+   HOVER LIFT (Highly Interactive)
+   ======================== */
+.hover-lift {
+  transition: transform 400ms cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 400ms ease, border-color 400ms ease;
+  will-change: transform, box-shadow;
+}
+
+.hover-lift:hover {
+  transform: translateY(-4px) scale(1.01);
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.8), 0 0 0 1px rgba(255, 255, 255, 0.25);
+  border-color: rgba(255, 255, 255, 0.3);
+  z-index: 10;
+}
+
+.hover-lift:active {
+  transform: translateY(0) scale(0.98);
+}
+
+/* ========================
+   HOLO TEXT (Premium Shimmer)
+   ======================== */
+.holo-text {
+  background: linear-gradient(
+    90deg,
+    #FFFFFF 0%,
+    #A1A1AA 20%,
+    #3B82F6 40%,
+    #F43F5E 60%,
+    #A1A1AA 80%,
+    #FFFFFF 100%
+  );
+  background-size: 200% auto;
+  color: transparent;
+  -webkit-background-clip: text;
+  background-clip: text;
+  animation: premiumShimmer 3s linear infinite;
+}
+
+/* ========================
+   BUTTON POP & STAR ANIMATION
+   ======================== */
+.btn {
+  transition: transform 200ms cubic-bezier(0.34, 1.56, 0.64, 1), background 200ms ease, box-shadow 200ms ease;
+}
+
+.btn:active {
+  transform: scale(0.92);
+}
+
+.star-pop {
+  animation: starPopBounce 500ms cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+}
+
+@keyframes starPopBounce {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.6) rotate(15deg); color: var(--color-ember-gold); }
+  100% { transform: scale(1); color: var(--color-ember-gold); }
+}
+
+
+</style>
+</head>
+<body>
+  <div class="app" id="app">
+
+    <!-- ========================
+         HEADER
+         ======================== -->
+    <header class="header" role="banner">
+      <div class="header__inner">
+        <div class="header__logo">
+          <img src="assets/logo.png" alt="Logo" class="header__logo-img" />
+          JobTrack
+        </div>
+        <nav class="header__nav" role="navigation" aria-label="Main navigation">
+          <button class="header__nav-btn is-active" data-view="dashboard" aria-label="Dashboard view">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline;vertical-align:middle;margin-right:6px;"><rect width="18" height="18" x="3" y="3" rx="2" ry="2"/><line x1="3" x2="21" y1="9" y2="9"/><line x1="9" x2="9" y1="21" y2="9"/></svg>
+            <span data-i18n="nav.dashboard">Dashboard</span>
+          </button>
+          <button class="header__nav-btn" data-view="board" aria-label="Kanban board view">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline;vertical-align:middle;margin-right:6px;"><rect width="18" height="18" x="3" y="3" rx="2"/><path d="M7.5 3v18M12 3v18M16.5 3v18"/></svg>
+            <span data-i18n="nav.board">Board</span>
+          </button>
+          <div style="width: 1px; height: 24px; background: rgba(255,255,255,0.1); margin: 0 8px;"></div>
+          <button class="btn btn--icon" id="btn-theme-toggle" aria-label="Toggle Theme" title="Toggle Theme">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>
+          </button>
+          <button class="btn btn--icon" id="btn-lang-toggle" aria-label="Toggle Language" title="Toggle Language" style="font-size: 12px; font-weight: bold; width: 40px;">
+            EN
+          </button>
+        </nav>
+      </div>
+    </header>
+
+    <!-- ========================
+         MAIN CONTENT (Rendered by JS)
+         ======================== -->
+    <main class="main-content" id="main-content" role="main">
+      <!-- Dynamic content injected here -->
+    </main>
+
+    <!-- ========================
+         TOAST CONTAINER
+         ======================== -->
+    <div class="toast-container" id="toast-container" aria-live="polite"></div>
+
+  </div>
+
+  <!-- Bundled JavaScript -->
+  <script>
+(() => {
+  // js/store.js
+  var STORAGE_KEY = "jobtrack_data";
+  var STATUS_ORDER = ["wishlist", "applied", "interview", "offer", "rejected"];
+  var STAGE_LABELS = ["Wishlist", "Applied", "Screen", "Interview", "Offer"];
+  function createDefaultStore() {
+    return {
+      jobs: [],
+      settings: {
+        view: "dashboard",
+        // 'dashboard' | 'board'
+        filter: "all",
+        sortBy: "lastUpdate",
+        // 'lastUpdate' | 'appliedDate' | 'company'
+        sortDir: "desc"
+      }
+    };
+  }
+  function createJob(data) {
+    return {
+      id: crypto.randomUUID(),
+      company: data.company || "",
+      position: data.position || "",
+      location: data.location || "",
+      salary: data.salary || "",
+      url: data.url || "",
+      status: data.status || "wishlist",
+      stage: STATUS_ORDER.indexOf(data.status || "wishlist"),
+      appliedDate: data.appliedDate || (/* @__PURE__ */ new Date()).toISOString().split("T")[0],
+      lastUpdate: (/* @__PURE__ */ new Date()).toISOString().split("T")[0],
+      notes: data.notes || "",
+      favorite: false,
+      createdAt: Date.now()
+    };
+  }
+  function loadStore() {
+    try {
+      const raw = localStorage.getItem(STORAGE_KEY);
+      if (raw) {
+        const parsed = JSON.parse(raw);
+        return { ...createDefaultStore(), ...parsed };
+      }
+    } catch (e) {
+      console.warn("Failed to load store:", e);
+    }
+    return createDefaultStore();
+  }
+  function saveStore(state) {
+    try {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+    } catch (e) {
+      console.warn("Failed to save store:", e);
+    }
+  }
+  var Store = {
+    _state: loadStore(),
+    _listeners: [],
+    /** Subscribe to state changes */
+    subscribe(fn) {
+      this._listeners.push(fn);
+      return () => {
+        this._listeners = this._listeners.filter((l) => l !== fn);
+      };
+    },
+    /** Notify all listeners */
+    _notify() {
+      saveStore(this._state);
+      this._listeners.forEach((fn) => fn(this._state));
+    },
+    /** Get current state */
+    getState() {
+      return this._state;
+    },
+    /** Get all jobs */
+    getJobs() {
+      return this._state.jobs;
+    },
+    /** Get a single job by ID */
+    getJob(id) {
+      return this._state.jobs.find((j) => j.id === id);
+    },
+    /** Get jobs filtered by status */
+    getJobsByStatus(status) {
+      if (status === "all") return this._state.jobs;
+      return this._state.jobs.filter((j) => j.status === status);
+    },
+    /** Add a new job */
+    addJob(data) {
+      const job = createJob(data);
+      this._state.jobs.unshift(job);
+      this._notify();
+      return job;
+    },
+    /** Update an existing job */
+    updateJob(id, updates) {
+      const idx = this._state.jobs.findIndex((j) => j.id === id);
+      if (idx === -1) return null;
+      const job = this._state.jobs[idx];
+      const updated = {
+        ...job,
+        ...updates,
+        lastUpdate: (/* @__PURE__ */ new Date()).toISOString().split("T")[0]
+      };
+      if (updates.status && updates.status !== job.status) {
+        updated.stage = STATUS_ORDER.indexOf(updates.status);
+      }
+      this._state.jobs[idx] = updated;
+      this._notify();
+      return updated;
+    },
+    /** Delete a job */
+    deleteJob(id) {
+      this._state.jobs = this._state.jobs.filter((j) => j.id !== id);
+      this._notify();
+    },
+    /** Toggle favorite */
+    toggleFavorite(id) {
+      const job = this.getJob(id);
+      if (job) {
+        this.updateJob(id, { favorite: !job.favorite });
+      }
+    },
+    /** Update job status (used by kanban drag-drop) */
+    updateJobStatus(id, newStatus) {
+      return this.updateJob(id, { status: newStatus });
+    },
+    /** Update settings */
+    updateSettings(updates) {
+      this._state.settings = { ...this._state.settings, ...updates };
+      this._notify();
+    },
+    /** Get current settings */
+    getSettings() {
+      return this._state.settings;
+    },
+    /** Get status order constant */
+    getStatusOrder() {
+      return STATUS_ORDER;
+    },
+    /** Get stage labels */
+    getStageLabels() {
+      return STAGE_LABELS;
+    },
+    /** Load sample data for first-time users */
+    loadSampleData() {
+      if (this._state.jobs.length > 0) return;
+      const samples = [
+        {
+          company: "Gojek",
+          position: "Senior Frontend Developer",
+          location: "Jakarta, Indonesia",
+          salary: "IDR 25-35M",
+          status: "interview",
+          url: "https://gojek.com/careers",
+          appliedDate: "2026-06-15",
+          notes: "HR interview completed. Waiting for technical round next week."
+        },
+        {
+          company: "Tokopedia",
+          position: "Full Stack Engineer",
+          location: "Jakarta, Indonesia",
+          salary: "IDR 28-40M",
+          status: "applied",
+          url: "https://tokopedia.com/careers",
+          appliedDate: "2026-06-22",
+          notes: "Applied through referral from college friend."
+        },
+        {
+          company: "Shopee",
+          position: "Frontend Engineer",
+          location: "Singapore (Remote)",
+          salary: "SGD 5-7K",
+          status: "offer",
+          url: "https://careers.shopee.com",
+          appliedDate: "2026-05-28",
+          notes: "Offer received! Negotiating salary package."
+        },
+        {
+          company: "Grab",
+          position: "Software Engineer II",
+          location: "Jakarta, Indonesia",
+          salary: "IDR 30-42M",
+          status: "rejected",
+          url: "https://grab.careers",
+          appliedDate: "2026-06-01",
+          notes: "Rejected after final round. Feedback: need more system design experience."
+        },
+        {
+          company: "Traveloka",
+          position: "UI Engineer",
+          location: "Jakarta, Indonesia",
+          salary: "IDR 22-30M",
+          status: "wishlist",
+          url: "https://traveloka.com/careers",
+          appliedDate: "2026-06-28",
+          notes: "Job posting looks interesting. Will apply after updating portfolio."
+        },
+        {
+          company: "Bukalapak",
+          position: "React Developer",
+          location: "Bandung, Indonesia",
+          salary: "IDR 18-25M",
+          status: "applied",
+          url: "https://careers.bukalapak.com",
+          appliedDate: "2026-06-25",
+          notes: "Applied directly through website."
+        }
+      ];
+      samples.forEach((s) => this.addJob(s));
+    }
+  };
+  var store_default = Store;
+
+  // js/search.js
+  var Search = {
+    _query: "",
+    _filter: "all",
+    _sortBy: "lastUpdate",
+    _sortDir: "desc",
+    /** Set search query */
+    setQuery(q) {
+      this._query = q.toLowerCase().trim();
+    },
+    /** Set status filter */
+    setFilter(status) {
+      this._filter = status;
+      store_default.updateSettings({ filter: status });
+    },
+    /** Set sort */
+    setSort(by, dir) {
+      this._sortBy = by;
+      this._sortDir = dir || "desc";
+    },
+    /** Toggle sort direction */
+    toggleSortDir() {
+      this._sortDir = this._sortDir === "desc" ? "asc" : "desc";
+    },
+    /** Get current filter */
+    getFilter() {
+      return this._filter;
+    },
+    /** Apply all filters and return matching jobs */
+    getFilteredJobs() {
+      let jobs = store_default.getJobs();
+      if (this._filter !== "all") {
+        jobs = jobs.filter((j) => j.status === this._filter);
+      }
+      if (this._query) {
+        jobs = jobs.filter(
+          (j) => j.company.toLowerCase().includes(this._query) || j.position.toLowerCase().includes(this._query) || j.location.toLowerCase().includes(this._query) || j.notes.toLowerCase().includes(this._query)
+        );
+      }
+      jobs = [...jobs].sort((a, b) => {
+        let valA, valB;
+        switch (this._sortBy) {
+          case "company":
+            valA = a.company.toLowerCase();
+            valB = b.company.toLowerCase();
+            return this._sortDir === "asc" ? valA.localeCompare(valB) : valB.localeCompare(valA);
+          case "appliedDate":
+            valA = new Date(a.appliedDate).getTime();
+            valB = new Date(b.appliedDate).getTime();
+            break;
+          case "lastUpdate":
+          default:
+            valA = new Date(a.lastUpdate).getTime();
+            valB = new Date(b.lastUpdate).getTime();
+            break;
+        }
+        return this._sortDir === "asc" ? valA - valB : valB - valA;
+      });
+      return jobs;
+    }
+  };
+  var search_default = Search;
+
+  // js/dragdrop.js
+  var draggedId = null;
+  var draggedEl = null;
+  var placeholder = null;
+  var DragDrop = {
+    _onDrop: null,
+    /** Initialize drag-drop on kanban board */
+    init(onDropCallback) {
+      this._onDrop = onDropCallback;
+    },
+    /** Handle drag start on a kanban card */
+    handleDragStart(e) {
+      const card = e.target.closest(".kanban-card");
+      if (!card) return;
+      draggedId = card.dataset.id;
+      draggedEl = card;
+      card.classList.add("is-dragging");
+      e.dataTransfer.effectAllowed = "move";
+      e.dataTransfer.setData("text/plain", draggedId);
+      requestAnimationFrame(() => {
+        if (draggedEl) {
+          draggedEl.style.opacity = "0.4";
+        }
+      });
+    },
+    /** Handle drag over a column */
+    handleDragOver(e) {
+      e.preventDefault();
+      e.dataTransfer.dropEffect = "move";
+      const column = e.target.closest(".kanban-column");
+      if (!column) return;
+      column.classList.add("is-drag-over");
+      const cardsContainer = column.querySelector(".kanban-column__cards");
+      if (cardsContainer && !cardsContainer.querySelector(".kanban-drop-placeholder")) {
+        if (!placeholder) {
+          placeholder = document.createElement("div");
+          placeholder.className = "kanban-drop-placeholder";
+        }
+        cardsContainer.appendChild(placeholder);
+      }
+    },
+    /** Handle drag enter */
+    handleDragEnter(e) {
+      e.preventDefault();
+      const column = e.target.closest(".kanban-column");
+      if (column) {
+        column.classList.add("is-drag-over");
+      }
+    },
+    /** Handle drag leave */
+    handleDragLeave(e) {
+      const column = e.target.closest(".kanban-column");
+      if (!column) return;
+      const relatedColumn = e.relatedTarget?.closest(".kanban-column");
+      if (relatedColumn !== column) {
+        column.classList.remove("is-drag-over");
+        const ph = column.querySelector(".kanban-drop-placeholder");
+        if (ph) ph.remove();
+      }
+    },
+    /** Handle drop on a column */
+    handleDrop(e) {
+      e.preventDefault();
+      const column = e.target.closest(".kanban-column");
+      if (!column || !draggedId) return;
+      const newStatus = column.dataset.status;
+      const job = store_default.getJob(draggedId);
+      if (job && job.status !== newStatus) {
+        store_default.updateJobStatus(draggedId, newStatus);
+        if (this._onDrop) {
+          this._onDrop(draggedId, newStatus);
+        }
+      }
+      this._cleanup();
+    },
+    /** Handle drag end (cleanup) */
+    handleDragEnd() {
+      this._cleanup();
+    },
+    /** Cleanup drag state */
+    _cleanup() {
+      if (draggedEl) {
+        draggedEl.classList.remove("is-dragging");
+        draggedEl.style.opacity = "";
+      }
+      document.querySelectorAll(".is-drag-over").forEach((el) => {
+        el.classList.remove("is-drag-over");
+      });
+      document.querySelectorAll(".kanban-drop-placeholder").forEach((el) => {
+        el.remove();
+      });
+      draggedId = null;
+      draggedEl = null;
+      placeholder = null;
+    },
+    /** Bind events to the kanban board container */
+    bindEvents(boardEl) {
+      if (!boardEl) return;
+      boardEl.addEventListener("dragstart", (e) => this.handleDragStart(e));
+      boardEl.addEventListener("dragover", (e) => this.handleDragOver(e));
+      boardEl.addEventListener("dragenter", (e) => this.handleDragEnter(e));
+      boardEl.addEventListener("dragleave", (e) => this.handleDragLeave(e));
+      boardEl.addEventListener("drop", (e) => this.handleDrop(e));
+      boardEl.addEventListener("dragend", () => this.handleDragEnd());
+    }
+  };
+  var dragdrop_default = DragDrop;
+
+  // js/i18n.js
+  var dictionaries = {
+    en: {
+      // Header & Nav
+      "nav.dashboard": "Dashboard",
+      "nav.board": "Board",
+      "header.lang": "ID",
+      // Dashboard Toolbar
+      "filter.all": "All",
+      "filter.wishlist": "Wishlist",
+      "filter.applied": "Applied",
+      "filter.interview": "Interview",
+      "filter.offer": "Offer",
+      "filter.rejected": "Rejected",
+      "search.placeholder": "Search company or position...",
+      "action.addJob": "Add Job",
+      // Stats
+      "stat.total": "Total Applications",
+      "stat.active": "Active Processes",
+      "stat.interviews": "Interviews",
+      "stat.offers": "Offers",
+      "stat.thisWeek": "This Week",
+      // Kanban Board
+      "board.wishlist": "Wishlist",
+      "board.applied": "Applied",
+      "board.interview": "Interview",
+      "board.offer": "Offer",
+      "board.rejected": "Rejected",
+      // Job List / Card
+      "card.edit": "Edit",
+      "card.delete": "Delete",
+      "empty.title": "No applications yet",
+      "empty.desc": "Your journey starts here. Add your first job application to start tracking.",
+      // Modal (Add / Edit)
+      "modal.addTitle": "Add New Application",
+      "modal.editTitle": "Edit Application",
+      "form.company": "Company Name",
+      "form.position": "Position / Role",
+      "form.status": "Status",
+      "form.location": "Location",
+      "form.salary": "Salary (Optional)",
+      "form.notes": "Notes",
+      "form.save": "Save Application",
+      "form.cancel": "Cancel",
+      // Confirm Delete
+      "confirm.deleteTitle": "Delete Application?",
+      "confirm.deleteDesc": "Remove {position} at {company}? This can't be undone.",
+      "confirm.yes": "Delete",
+      "confirm.no": "Keep it",
+      // Toasts
+      "toast.fillFields": "Please fill in company and position.",
+      "toast.updated": "Job updated successfully.",
+      "toast.added": "Job added successfully.",
+      "toast.deleted": "Application removed.",
+      "toast.moved": "Moved to {status}."
+    },
+    id: {
+      // Header & Nav
+      "nav.dashboard": "Dasbor",
+      "nav.board": "Papan",
+      "header.lang": "EN",
+      // Dashboard Toolbar
+      "filter.all": "Semua",
+      "filter.wishlist": "Tersimpan",
+      "filter.applied": "Dilamar",
+      "filter.interview": "Wawancara",
+      "filter.offer": "Diterima",
+      "filter.rejected": "Ditolak",
+      "search.placeholder": "Cari perusahaan atau posisi...",
+      "action.addJob": "Tambah Pekerjaan",
+      // Stats
+      "stat.total": "Total Lamaran",
+      "stat.active": "Proses Aktif",
+      "stat.interviews": "Wawancara",
+      "stat.offers": "Diterima",
+      "stat.thisWeek": "Minggu Ini",
+      // Kanban Board
+      "board.wishlist": "Tersimpan",
+      "board.applied": "Dilamar",
+      "board.interview": "Wawancara",
+      "board.offer": "Diterima",
+      "board.rejected": "Ditolak",
+      // Job List / Card
+      "card.edit": "Ubah",
+      "card.delete": "Hapus",
+      "empty.title": "Belum ada lamaran",
+      "empty.desc": "Perjalanan Anda dimulai di sini. Tambahkan lamaran pertama Anda.",
+      // Modal (Add / Edit)
+      "modal.addTitle": "Tambah Lamaran Baru",
+      "modal.editTitle": "Ubah Lamaran",
+      "form.company": "Nama Perusahaan",
+      "form.position": "Posisi / Pekerjaan",
+      "form.status": "Status",
+      "form.location": "Lokasi",
+      "form.salary": "Gaji (Opsional)",
+      "form.notes": "Catatan",
+      "form.save": "Simpan Lamaran",
+      "form.cancel": "Batal",
+      // Confirm Delete
+      "confirm.deleteTitle": "Hapus Lamaran?",
+      "confirm.deleteDesc": "Hapus {position} di {company}? Data tidak bisa dikembalikan.",
+      "confirm.yes": "Hapus",
+      "confirm.no": "Kembali",
+      // Toasts
+      "toast.fillFields": "Mohon isi nama perusahaan dan posisi.",
+      "toast.updated": "Lamaran berhasil diperbarui.",
+      "toast.added": "Lamaran berhasil ditambahkan.",
+      "toast.deleted": "Lamaran dihapus.",
+      "toast.moved": "Dipindah ke {status}."
+    }
+  };
+  var I18n = class {
+    constructor() {
+      this.lang = "en";
+    }
+    setLang(lang) {
+      if (dictionaries[lang]) {
+        this.lang = lang;
+      }
+    }
+    getLang() {
+      return this.lang;
+    }
+    t(key, params = {}) {
+      let str = dictionaries[this.lang][key] || dictionaries["en"][key] || key;
+      for (const [k, v] of Object.entries(params)) {
+        str = str.replace(`{${k}}`, v);
+      }
+      return str;
+    }
+  };
+  var i18n_default = new I18n();
+
+  // js/analytics.js
+  var Analytics = {
+    /** Get all hero stats */
+    getHeroStats() {
+      const jobs = store_default.getJobs();
+      const now = /* @__PURE__ */ new Date();
+      const weekAgo = new Date(now);
+      weekAgo.setDate(weekAgo.getDate() - 7);
+      const thisWeek = jobs.filter((j) => {
+        const d = new Date(j.appliedDate);
+        return d >= weekAgo;
+      }).length;
+      return [
+        {
+          label: "Total Applied",
+          value: jobs.length,
+          modifier: "total"
+        },
+        {
+          label: "Interviewing",
+          value: jobs.filter((j) => j.status === "interview").length,
+          modifier: "blue"
+        },
+        {
+          label: "Offers",
+          value: jobs.filter((j) => j.status === "offer").length,
+          modifier: "gold"
+        },
+        {
+          label: "This Week",
+          value: thisWeek,
+          modifier: "indigo"
+        }
+      ];
+    },
+    /** Get count per status */
+    getStatusCounts() {
+      const jobs = store_default.getJobs();
+      const counts = { all: jobs.length };
+      STATUS_ORDER.forEach((s) => {
+        counts[s] = jobs.filter((j) => j.status === s).length;
+      });
+      return counts;
+    },
+    /** Get response rate */
+    getResponseRate() {
+      const jobs = store_default.getJobs();
+      if (jobs.length === 0) return 0;
+      const responded = jobs.filter(
+        (j) => j.status === "interview" || j.status === "offer" || j.status === "rejected"
+      ).length;
+      return Math.round(responded / jobs.length * 100);
+    }
+  };
+  var analytics_default = Analytics;
+
+  // js/components.js
+  var ICONS = {
+    search: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>`,
+    plus: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>`,
+    x: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18M6 6l12 12"/></svg>`,
+    star: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>`,
+    starFilled: `<svg viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>`,
+    edit: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 3a2.85 2.83 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5Z"/></svg>`,
+    trash: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"/></svg>`,
+    link: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>`,
+    check: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>`,
+    alertCircle: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" x2="12" y1="8" y2="12"/><line x1="12" x2="12.01" y1="16" y2="16"/></svg>`,
+    info: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/></svg>`,
+    briefcase: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="14" x="2" y="7" rx="2" ry="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg>`,
+    mapPin: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>`,
+    calendar: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="18" x="3" y="4" rx="2" ry="2"/><line x1="16" x2="16" y1="2" y2="6"/><line x1="8" x2="8" y1="2" y2="6"/><line x1="3" x2="21" y1="10" y2="10"/></svg>`,
+    building: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="16" height="20" x="4" y="2" rx="2" ry="2"/><path d="M9 22v-4h6v4M8 6h.01M16 6h.01M12 6h.01M12 10h.01M12 14h.01M16 10h.01M16 14h.01M8 10h.01M8 14h.01"/></svg>`,
+    dollar: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" x2="12" y1="2" y2="22"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>`,
+    rocket: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 0 0-2.91-.09zM12 15l-3-3a22 22 0 0 1 2-3.95A12.88 12.88 0 0 1 22 2c0 2.72-.78 7.5-6 11a22.35 22.35 0 0 1-4 2z"/><path d="M9 12H4s.55-3.03 2-4c1.62-1.08 5 0 5 0"/><path d="M12 15v5s3.03-.55 4-2c1.08-1.62 0-5 0-5"/></svg>`,
+    layout: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="18" x="3" y="3" rx="2" ry="2"/><line x1="3" x2="21" y1="9" y2="9"/><line x1="9" x2="9" y1="21" y2="9"/></svg>`,
+    columns: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="18" x="3" y="3" rx="2"/><path d="M7.5 3v18M12 3v18M16.5 3v18"/></svg>`,
+    notepad: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 2v4M16 2v4M3 10h18"/><rect width="18" height="18" x="3" y="4" rx="2"/><path d="M8 14h.01M12 14h.01M16 14h.01M8 18h.01M12 18h.01M16 18h.01"/></svg>`
+  };
+  function getStatusLabel(s) {
+    return i18n_default.t("board." + s) || s;
+  }
+  function formatDate(dateStr) {
+    if (!dateStr) return "";
+    const d = new Date(dateStr);
+    return d.toLocaleDateString("en-GB", { day: "numeric", month: "short" });
+  }
+  function renderHeroStats() {
+    const stats = analytics_default.getHeroStats();
+    return `
+    <section class="hero-stats" id="hero-stats" aria-label="Application statistics">
+      ${stats.map((stat, i) => `
+        <div class="stat-card ${stat.modifier ? "stat-card--" + stat.modifier : ""} animate-slide-up stagger-${i + 1}">
+          <div class="stat-card__number count-up holo-text" data-target="${stat.value}">
+            ${stat.value}
+          </div>
+          <div class="stat-card__label">${stat.label}</div>
+        </div>
+      `).join("")}
+    </section>
+  `;
+  }
+  function renderToolbar(activeFilter, query) {
+    const counts = analytics_default.getStatusCounts();
+    const filters = [
+      { key: "all", label: i18n_default.t("filter.all") },
+      ...STATUS_ORDER.map((s) => ({ key: s, label: getStatusLabel(s) }))
+    ];
+    return `
+    <div class="toolbar">
+      <div class="toolbar__left">
+        <div class="filter-tabs" role="tablist" aria-label="Filter by status">
+          ${filters.map((f) => `
+            <button class="filter-tab ${activeFilter === f.key ? "is-active" : ""}"
+                    data-filter="${f.key}"
+                    role="tab"
+                    aria-selected="${activeFilter === f.key}">
+              ${f.label}<span class="filter-tab__count">${counts[f.key] || 0}</span>
+            </button>
+          `).join("")}
+        </div>
+      </div>
+      <div class="toolbar__right">
+        <div class="search-box">
+          <span class="search-box__icon">${ICONS.search}</span>
+          <input type="text"
+                 class="search-box__input"
+                 id="search-input"
+                 placeholder="${i18n_default.t("search.placeholder")}"
+                 value="${query || ""}"
+                 aria-label="Search jobs" />
+        </div>
+        <button class="btn btn--primary" id="btn-add-job" aria-label="Add new job">
+          ${ICONS.plus}
+          <span>${i18n_default.t("action.addJob")}</span>
+        </button>
+      </div>
+    </div>
+  `;
+  }
+  function renderJourneyRail(status) {
+    const stageIndex = STATUS_ORDER.indexOf(status);
+    return `
+    <div class="journey-rail" aria-label="Application progress">
+      ${STAGE_LABELS.map((label, i) => {
+      let nodeClass = "journey-rail__node";
+      let lineClass = "journey-rail__line";
+      if (i < stageIndex) {
+        nodeClass += " journey-rail__node--completed";
+        lineClass += " journey-rail__line--completed";
+      } else if (i === stageIndex) {
+        nodeClass += " journey-rail__node--current rail-pulse";
+      } else {
+        nodeClass += " journey-rail__node--upcoming";
+        lineClass += " journey-rail__line--upcoming";
+      }
+      const segment = `
+          <div class="journey-rail__segment">
+            <div class="${nodeClass}" data-stage="${i}" title="${label}"></div>
+            ${i < STAGE_LABELS.length - 1 ? `<div class="${lineClass}"></div>` : ""}
+          </div>
+        `;
+      return segment;
+    }).join("")}
+    </div>
+    <div class="journey-rail__labels">
+      ${STAGE_LABELS.map((_, i) => {
+      const stages = ["wishlist", "applied", "interview", "offer", "rejected"];
+      return `<span class="journey-rail__label ${i === stageIndex ? "journey-rail__label--active" : ""}">${i18n_default.t("board." + stages[i])}</span>`;
+    }).join("")}
+    </div>
+  `;
+  }
+  function renderJobCard(job, index) {
+    const statusLabel = getStatusLabel(job.status);
+    return `
+    <article class="job-card job-card--${job.status} animate-slide-up hover-lift"
+             data-id="${job.id}"
+             style="animation-delay: ${index * 60}ms"
+             tabindex="0"
+             role="article"
+             aria-label="${job.position} at ${job.company}">
+      <div class="job-card__header">
+        <div class="job-card__header-left">
+          <div class="job-card__status">
+            <span class="job-card__status-dot"></span>
+            ${statusLabel}
+          </div>
+          <h3 class="job-card__title">${job.position}</h3>
+          <div class="job-card__company">
+            <span>${job.company}</span>
+            ${job.location ? `<span class="separator">\xB7</span><span>${job.location}</span>` : ""}
+            ${job.salary ? `<span class="separator">\xB7</span><span>${job.salary}</span>` : ""}
+          </div>
+        </div>
+        <div class="job-card__header-right">
+          <button class="btn btn--icon job-card__fav ${job.favorite ? "is-active" : ""}"
+                  data-action="toggle-fav" data-id="${job.id}"
+                  aria-label="${job.favorite ? "Remove from favorites" : "Add to favorites"}"
+                  title="${job.favorite ? "Remove from favorites" : "Add to favorites"}">
+            ${job.favorite ? ICONS.starFilled : ICONS.star}
+          </button>
+          <div class="job-card__actions">
+            ${job.url ? `
+              <a href="${job.url}" target="_blank" rel="noopener noreferrer"
+                 class="btn btn--icon" aria-label="Open job posting" title="Open job posting">
+                ${ICONS.link}
+              </a>
+            ` : ""}
+            <button class="btn btn--icon" data-action="edit-job" data-id="${job.id}"
+                    aria-label="Edit job" title="Edit">
+              ${ICONS.edit}
+            </button>
+            <button class="btn btn--icon btn--danger" data-action="delete-job" data-id="${job.id}"
+                    aria-label="Delete job" title="Delete">
+              ${ICONS.trash}
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <div class="job-card__dates">
+        <span>Applied: ${formatDate(job.appliedDate)}</span>
+        <span>Updated: ${formatDate(job.lastUpdate)}</span>
+      </div>
+
+      ${renderJourneyRail(job.status)}
+    </article>
+  `;
+  }
+  function renderJobList(jobs) {
+    if (jobs.length === 0) {
+      return renderEmptyState();
+    }
+    return `
+    <div class="job-list" id="job-list" role="list">
+      ${jobs.map((job, i) => renderJobCard(job, i)).join("")}
+    </div>
+  `;
+  }
+  function renderEmptyState() {
+    return `
+    <div class="empty-state">
+      <div class="empty-state__icon animate-float">
+        ${ICONS.rocket}
+      </div>
+      <h3 class="empty-state__title">${i18n_default.t("empty.title")}</h3>
+      <p class="empty-state__desc">${i18n_default.t("empty.desc")}</p>
+      <button class="btn btn--primary" id="btn-add-job-empty">
+        ${ICONS.plus} ${i18n_default.t("action.addJob")}
+      </button>
+    </div>
+  `;
+  }
+  function renderKanbanBoard() {
+    const jobs = store_default.getJobs();
+    return `
+    <div class="kanban-board" id="kanban-board">
+      ${STATUS_ORDER.map((status) => {
+      const columnJobs = jobs.filter((j) => j.status === status);
+      return `
+          <div class="kanban-column kanban-column--${status}" data-status="${status}">
+            <div class="kanban-column__header">
+              <span class="kanban-column__title">${getStatusLabel(status)}</span>
+              <span class="kanban-column__count">${columnJobs.length}</span>
+            </div>
+            <div class="kanban-column__cards">
+              ${columnJobs.map((job) => `
+                <div class="kanban-card" draggable="true" data-id="${job.id}"
+                     tabindex="0" aria-label="${job.position} at ${job.company}">
+                  <div class="kanban-card__company">${job.company}</div>
+                  <div class="kanban-card__position">${job.position}</div>
+                  <div class="kanban-card__date">${formatDate(job.appliedDate)}</div>
+                </div>
+              `).join("")}
+            </div>
+          </div>
+        `;
+    }).join("")}
+    </div>
+  `;
+  }
+  function renderModal(job = null) {
+    const isEdit = !!job;
+    const title = isEdit ? i18n_default.t("modal.editTitle") : i18n_default.t("modal.addTitle");
+    const btnText = isEdit ? i18n_default.t("form.save") : i18n_default.t("form.save");
+    return `
+    <div class="modal-overlay backdrop-enter" id="modal-overlay">
+      <div class="modal modal-enter" id="modal" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+        <div class="modal__header">
+          <h2 class="modal__title" id="modal-title">${title}</h2>
+          <button class="modal__close" id="modal-close" aria-label="Close dialog">
+            ${ICONS.x}
+          </button>
+        </div>
+
+        <form class="modal__body" id="job-form" novalidate>
+          <input type="hidden" name="id" value="${isEdit ? job.id : ""}" />
+
+          <div class="form-group">
+            <label for="field-company">${ICONS.building} ${i18n_default.t("form.company")}</label>
+            <input type="text" id="field-company" name="company"
+                   placeholder="e.g. Gojek, Tokopedia"
+                   value="${isEdit ? job.company : ""}" required />
+          </div>
+
+          <div class="form-group">
+            <label for="field-position">${ICONS.briefcase} ${i18n_default.t("form.position")}</label>
+            <input type="text" id="field-position" name="position"
+                   placeholder="e.g. Senior Frontend Developer"
+                   value="${isEdit ? job.position : ""}" required />
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label for="field-location">${ICONS.mapPin} ${i18n_default.t("form.location")}</label>
+              <input type="text" id="field-location" name="location"
+                     placeholder="e.g. Jakarta, Remote"
+                     value="${isEdit ? job.location : ""}" />
+            </div>
+            <div class="form-group">
+              <label for="field-salary">${ICONS.dollar} ${i18n_default.t("form.salary")}</label>
+              <input type="text" id="field-salary" name="salary"
+                     placeholder="e.g. IDR 25-35M"
+                     value="${isEdit ? job.salary : ""}" />
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label for="field-status">${i18n_default.t("form.status")}</label>
+              <select id="field-status" name="status">
+                ${STATUS_ORDER.map((s) => `
+                  <option value="${s}" ${isEdit && job.status === s ? "selected" : ""}>
+                    ${getStatusLabel(s)}
+                  </option>
+                `).join("")}
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="field-date">${ICONS.calendar} Applied Date</label>
+              <input type="date" id="field-date" name="appliedDate"
+                     value="${isEdit ? job.appliedDate : (/* @__PURE__ */ new Date()).toISOString().split("T")[0]}" />
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="field-url">${ICONS.link} Job URL</label>
+            <input type="url" id="field-url" name="url"
+                   placeholder="https://..."
+                   value="${isEdit ? job.url : ""}" />
+          </div>
+
+          <div class="form-group">
+            <label for="field-notes">${ICONS.notepad} ${i18n_default.t("form.notes")}</label>
+            <textarea id="field-notes" name="notes"
+                      placeholder="...">${isEdit ? job.notes : ""}</textarea>
+          </div>
+        </form>
+
+        <div class="modal__footer">
+          <button class="btn btn--ghost" id="modal-cancel">${i18n_default.t("form.cancel")}</button>
+          <button class="btn btn--primary" id="modal-save" type="submit" form="job-form">
+            ${ICONS.check} ${btnText}
+          </button>
+        </div>
+      </div>
+    </div>
+  `;
+  }
+  function renderToast(message, type = "success") {
+    const iconMap = {
+      success: ICONS.check,
+      error: ICONS.alertCircle,
+      info: ICONS.info
+    };
+    return `
+    <div class="toast toast--${type} toast-enter" role="alert">
+      <span class="toast__icon">${iconMap[type] || iconMap.info}</span>
+      <span class="toast__message">${message}</span>
+      <button class="toast__close" aria-label="Dismiss">${ICONS.x}</button>
+    </div>
+  `;
+  }
+  function renderConfirmDialog(title, message) {
+    return `
+    <div class="modal-overlay backdrop-enter" id="confirm-overlay">
+      <div class="modal modal-enter" style="max-width: 400px;">
+        <div class="confirm-dialog">
+          <h3 class="confirm-dialog__title">${title}</h3>
+          <p class="confirm-dialog__message">${message}</p>
+          <div class="confirm-dialog__actions">
+            <button class="btn btn--ghost" id="confirm-cancel">${i18n_default.t("confirm.no")}</button>
+            <button class="btn btn--danger" id="confirm-yes">${i18n_default.t("confirm.yes")}</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  `;
+  }
+
+  // js/app.js
+  var currentView = "dashboard";
+  var searchQuery = "";
+  var $ = (sel) => document.querySelector(sel);
+  var $ = (sel) => document.querySelectorAll(sel);
+  function renderApp() {
+    const mainContent = $("#main-content");
+    if (!mainContent) return;
+    const activeFilter = search_default.getFilter();
+    const filteredJobs = search_default.getFilteredJobs();
+    let viewHTML = "";
+    if (currentView === "dashboard") {
+      viewHTML = `
+      ${renderHeroStats()}
+      ${renderToolbar(activeFilter, searchQuery)}
+      <div class="view is-active" id="view-dashboard">
+        ${renderJobList(filteredJobs)}
+      </div>
+    `;
+    } else if (currentView === "board") {
+      viewHTML = `
+      ${renderHeroStats()}
+      <div class="toolbar" style="margin-bottom: var(--space-6);">
+        <div class="toolbar__right" style="margin-left: auto;">
+          <button class="btn btn--primary" id="btn-add-job" aria-label="Add new job">
+            ${ICONS.plus}
+            <span>Add Job</span>
+          </button>
+        </div>
+      </div>
+      <div class="view is-active" id="view-board">
+        ${renderKanbanBoard()}
+      </div>
+    `;
+    }
+    mainContent.innerHTML = viewHTML;
+    bindDynamicEvents();
+    if (currentView === "board") {
+      const board = $("#kanban-board");
+      if (board) {
+        dragdrop_default.bindEvents(board);
+      }
+    }
+    $(".header__nav-btn").forEach((btn) => {
+      btn.classList.toggle("is-active", btn.dataset.view === currentView);
+    });
+    animateCountUp();
+  }
+  function animateCountUp() {
+    $(".count-up").forEach((el) => {
+      const target = parseInt(el.dataset.target, 10);
+      if (isNaN(target)) return;
+      let current = 0;
+      const duration = 600;
+      const step = Math.max(1, Math.floor(target / (duration / 16)));
+      const startTime = performance.now();
+      function tick(now) {
+        const elapsed = now - startTime;
+        const progress = Math.min(elapsed / duration, 1);
+        const eased = 1 - Math.pow(1 - progress, 3);
+        current = Math.round(target * eased);
+        el.textContent = current;
+        if (progress < 1) {
+          requestAnimationFrame(tick);
+        } else {
+          el.textContent = target;
+        }
+      }
+      el.textContent = "0";
+      requestAnimationFrame(tick);
+    });
+  }
+  function openModal(jobId = null) {
+    const job = jobId ? store_default.getJob(jobId) : null;
+    const modalHTML = renderModal(job);
+    closeModal();
+    document.body.insertAdjacentHTML("beforeend", modalHTML);
+    document.body.style.overflow = "hidden";
+    setTimeout(() => {
+      const firstInput = $("#field-company");
+      if (firstInput) firstInput.focus();
+    }, 100);
+    bindModalEvents();
+  }
+  function closeModal() {
+    const overlay = $("#modal-overlay");
+    if (!overlay) return;
+    const modal = overlay.querySelector(".modal");
+    if (modal) {
+      modal.classList.remove("modal-enter");
+      modal.classList.add("modal-exit");
+      overlay.classList.remove("backdrop-enter");
+      overlay.classList.add("backdrop-exit");
+    }
+    setTimeout(() => {
+      overlay.remove();
+      document.body.style.overflow = "";
+    }, 220);
+  }
+  function bindModalEvents() {
+    const closeBtn = $("#modal-close");
+    if (closeBtn) closeBtn.addEventListener("click", closeModal);
+    const cancelBtn = $("#modal-cancel");
+    if (cancelBtn) cancelBtn.addEventListener("click", closeModal);
+    const overlay = $("#modal-overlay");
+    if (overlay) {
+      overlay.addEventListener("click", (e) => {
+        if (e.target === overlay) closeModal();
+      });
+    }
+    const saveBtn = $("#modal-save");
+    if (saveBtn) {
+      saveBtn.addEventListener("click", (e) => {
+        e.preventDefault();
+        handleSaveJob();
+      });
+    }
+    const form = $("#job-form");
+    if (form) {
+      form.addEventListener("submit", (e) => {
+        e.preventDefault();
+        handleSaveJob();
+      });
+    }
+    document.addEventListener("keydown", handleEscKey);
+  }
+  function handleEscKey(e) {
+    if (e.key === "Escape") {
+      const confirmOverlay = $("#confirm-overlay");
+      if (confirmOverlay) {
+        confirmOverlay.remove();
+        return;
+      }
+      closeModal();
+      document.removeEventListener("keydown", handleEscKey);
+    }
+  }
+  function handleSaveJob() {
+    const form = $("#job-form");
+    if (!form) return;
+    const formData = new FormData(form);
+    const data = Object.fromEntries(formData.entries());
+    if (!data.company.trim() || !data.position.trim()) {
+      showToast(i18n_default.t("toast.fillFields"), "error");
+      return;
+    }
+    const id = data.id;
+    delete data.id;
+    if (id) {
+      store_default.updateJob(id, data);
+      showToast(i18n_default.t("toast.updated"), "success");
+    } else {
+      store_default.addJob(data);
+      showToast(i18n_default.t("toast.added"), "success");
+    }
+    closeModal();
+    renderApp();
+  }
+  function showConfirmDelete(jobId) {
+    const job = store_default.getJob(jobId);
+    if (!job) return;
+    const html = renderConfirmDialog(
+      i18n_default.t("confirm.deleteTitle"),
+      i18n_default.t("confirm.deleteDesc", { position: job.position, company: job.company })
+    );
+    document.body.insertAdjacentHTML("beforeend", html);
+    const confirmYes = $("#confirm-yes");
+    const confirmCancel = $("#confirm-cancel");
+    const confirmOverlay = $("#confirm-overlay");
+    if (confirmYes) {
+      confirmYes.addEventListener("click", () => {
+        store_default.deleteJob(jobId);
+        confirmOverlay.remove();
+        showToast(i18n_default.t("toast.deleted"), "info");
+        renderApp();
+      });
+    }
+    if (confirmCancel) {
+      confirmCancel.addEventListener("click", () => {
+        confirmOverlay.remove();
+      });
+    }
+    if (confirmOverlay) {
+      confirmOverlay.addEventListener("click", (e) => {
+        if (e.target === confirmOverlay) confirmOverlay.remove();
+      });
+    }
+  }
+  function showToast(message, type = "success") {
+    const container = $("#toast-container");
+    if (!container) return;
+    const toastHTML = renderToast(message, type);
+    container.insertAdjacentHTML("beforeend", toastHTML);
+    const toast = container.lastElementChild;
+    const closeBtn = toast.querySelector(".toast__close");
+    if (closeBtn) {
+      closeBtn.addEventListener("click", () => dismissToast(toast));
+    }
+    setTimeout(() => dismissToast(toast), 3500);
+  }
+  function dismissToast(toast) {
+    if (!toast || !toast.parentNode) return;
+    toast.classList.remove("toast-enter");
+    toast.classList.add("toast-exit");
+    setTimeout(() => {
+      if (toast.parentNode) toast.remove();
+    }, 260);
+  }
+  function bindDynamicEvents() {
+    const addBtns = $("#btn-add-job, #btn-add-job-empty");
+    addBtns.forEach((btn) => {
+      btn.addEventListener("click", () => openModal());
+    });
+    $(".filter-tab").forEach((tab) => {
+      tab.addEventListener("click", () => {
+        const filter = tab.dataset.filter;
+        search_default.setFilter(filter);
+        renderApp();
+      });
+    });
+    const searchInput = $("#search-input");
+    if (searchInput) {
+      let debounceTimer;
+      searchInput.addEventListener("input", (e) => {
+        clearTimeout(debounceTimer);
+        searchQuery = e.target.value;
+        debounceTimer = setTimeout(() => {
+          search_default.setQuery(searchQuery);
+          const filteredJobs = search_default.getFilteredJobs();
+          const listContainer = $("#view-dashboard");
+          if (listContainer) {
+            listContainer.innerHTML = renderJobList(filteredJobs).trim();
+            bindCardEvents();
+          }
+        }, 250);
+      });
+    }
+    bindCardEvents();
+  }
+  function bindCardEvents() {
+    const jobList = $("#job-list");
+    if (jobList) {
+      jobList.addEventListener("click", handleCardClick);
+    }
+    $(".kanban-card").forEach((card) => {
+      card.addEventListener("click", (e) => {
+        if (e.target.closest("button")) return;
+        openModal(card.dataset.id);
+      });
+    });
+  }
+  function handleCardClick(e) {
+    const btn = e.target.closest("[data-action]");
+    if (btn) {
+      e.stopPropagation();
+      const action = btn.dataset.action;
+      const id = btn.dataset.id;
+      switch (action) {
+        case "toggle-fav":
+          btn.classList.add("star-pop");
+          store_default.toggleFavorite(id);
+          setTimeout(() => renderApp(), 400);
+          break;
+        case "edit-job":
+          openModal(id);
+          break;
+        case "delete-job":
+          showConfirmDelete(id);
+          break;
+      }
+      return;
+    }
+    const card = e.target.closest(".job-card");
+    if (card && !e.target.closest("a")) {
+      openModal(card.dataset.id);
+    }
+  }
+  function bindNavEvents() {
+    $(".header__nav-btn").forEach((btn) => {
+      btn.addEventListener("click", () => {
+        currentView = btn.dataset.view;
+        store_default.updateSettings({ view: currentView });
+        renderApp();
+      });
+    });
+    const btnTheme = $("#btn-theme-toggle");
+    if (btnTheme) {
+      btnTheme.addEventListener("click", () => {
+        const currentTheme = document.documentElement.getAttribute("data-theme") || "dark";
+        const newTheme = currentTheme === "dark" ? "light" : "dark";
+        document.documentElement.setAttribute("data-theme", newTheme);
+        store_default.updateSettings({ theme: newTheme });
+      });
+    }
+    const btnLang = $("#btn-lang-toggle");
+    if (btnLang) {
+      btnLang.addEventListener("click", () => {
+        const currentLang = i18n_default.getLang();
+        const newLang = currentLang === "en" ? "id" : "en";
+        i18n_default.setLang(newLang);
+        store_default.updateSettings({ lang: newLang });
+        updateStaticText();
+        renderApp();
+      });
+    }
+  }
+  function updateStaticText() {
+    const btnLang = $("#btn-lang-toggle");
+    if (btnLang) btnLang.textContent = i18n_default.t("header.lang");
+    $("[data-i18n]").forEach((el) => {
+      el.textContent = i18n_default.t(el.dataset.i18n);
+    });
+  }
+  function handleDragDrop(jobId, newStatus) {
+    showToast(i18n_default.t("toast.moved", { status: getStatusLabel(newStatus) }), "success");
+    renderApp();
+  }
+  function init() {
+    const settings = store_default.getSettings();
+    currentView = settings.view || "dashboard";
+    search_default.setFilter(settings.filter || "all");
+    const theme = settings.theme || "dark";
+    document.documentElement.setAttribute("data-theme", theme);
+    const lang = settings.lang || "en";
+    i18n_default.setLang(lang);
+    updateStaticText();
+    store_default.loadSampleData();
+    dragdrop_default.init(handleDragDrop);
+    bindNavEvents();
+    store_default.subscribe(() => {
+    });
+    renderApp();
+  }
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", init);
+  } else {
+    init();
+  }
+})();
+
+</script>
+</body>
+</html>
